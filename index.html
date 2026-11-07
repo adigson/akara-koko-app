@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akara & Koko Delivery</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b0000">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="brand"><h1>🥣 Akara & Koko</h1><p data-i18n="tagline">Fresh • Hot • Bottled or Servable</p></div>
+  <div class="header-actions">
+    <button id="languageToggle" onclick="toggleLanguage()" aria-label="Change language">Yorùbá</button>
+    <button onclick="showAdmin()" data-i18n="admin">Admin</button>
+  </div>
+</header>
+
+<main>
+  <section class="menu">
+    <h2 data-i18n="menu">Menu</h2>
+    <div class="menu-grid">
+      <article class="item">
+        <img src="images/akara.jpg" alt="Akara">
+        <h3>Akara (5 pcs)</h3><p>₦500</p>
+        <button onclick="addToCart('Akara (5 pcs)', 500)" data-i18n="add">Add</button>
+      </article>
+      <article class="item">
+        <img src="images/koko.jpg" alt="Koko">
+        <h3>Koko (Servable Cup)</h3><p>₦300</p>
+        <button onclick="addToCart('Koko (Cup)', 300)" data-i18n="add">Add</button>
+      </article>
+      <article class="item">
+        <img src="images/koko.jpg" alt="Bottled Koko">
+        <h3>Koko (Bottled)</h3><p>₦700</p>
+        <button onclick="addToCart('Koko (Bottle)', 700)" data-i18n="add">Add</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="cart">
+    <h2 data-i18n="cart">Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <div class="order-totals">
+      <p id="total">Food Total: ₦0</p>
+      <p>Delivery Fee: ₦<span id="deliveryFee">0</span></p>
+      <p class="grand-total"><strong>Grand Total: ₦<span id="grandTotal">0</span></strong></p>
+    </div>
+
+    <fieldset class="payment-options">
+      <legend data-i18n="payment">Payment</legend>
+      <label><input type="radio" name="payment" value="WhatsApp / Cash" checked> <span data-i18n="cash">WhatsApp / Cash on delivery</span></label>
+      <label><input type="radio" name="payment" value="Paystack"> Paystack</label>
+      <label><input type="radio" name="payment" value="Flutterwave"> Flutterwave</label>
+    </fieldset>
+
+    <div class="delivery-confirmation">
+      <label for="confirmationKey">Admin delivery confirmation key
+        <input type="text" id="confirmationKey" maxlength="8" autocomplete="off" placeholder="Enter key after WhatsApp confirmation">
+      </label>
+      <small>Online payment is enabled only after an admin confirms delivery availability.</small>
+    </div>
+
+    <div class="delivery">
+  <h3>Delivery Details</h3>
+
+  <input type="text" id="customerName" placeholder="Your Name" required />
+  <input type="tel" id="customerPhone" placeholder="Phone Number" required />
+  <textarea id="customerAddress" placeholder="Delivery Address" required></textarea>
+
+  <select id="deliveryLocation" onchange="updateDeliveryFee()" required>
+  <option value="">Select Delivery Location</option>
+  <option value="500">Within Adeun – ₦500</option>
+  <option value="800">Within Abeokuta – ₦800</option>
+  <option value="1500">Outside Abeokuta – ₦1500</option>
+</select>
+
+  <select id="deliveryTime" required>
+    <option value="">Preferred Delivery Time</option>
+    <option value="Morning (6am – 9am)">Morning (6am – 9am)</option>
+    <option value="Late Morning (9am – 12pm)">Late Morning (9am – 12pm)</option>
+    <option value="Afternoon (12pm – 3pm)">Afternoon (12pm – 3pm)</option>
+  </select>
+</div>
+    <section class="delivery-policy" aria-label="Delivery policy acceptance">
+      <div class="policy-agreement">
+        <label for="acceptDeliveryPolicy">
+          <input type="checkbox" id="acceptDeliveryPolicy">
+          I have read and accept the <a href="#deliveryPolicyDialog" id="policyLink">Delivery &amp; Refund Policy</a>.
+        </label>
+      </div>
+    </section>
+
+    <dialog id="deliveryPolicyDialog" aria-labelledby="policyDialogTitle">
+      <article class="policy-dialog-content">
+        <div class="policy-dialog-header">
+          <h2 id="policyDialogTitle">Delivery &amp; Refund Policy</h2>
+          <button type="button" class="dialog-close" onclick="closeDeliveryPolicy()" aria-label="Close policy">✕</button>
+        </div>
+        <p><strong>Effective date: 7 November 2026</strong></p>
+        <p>Customers must provide an accurate delivery address, an active phone number, and be available at the selected delivery time. If the order cannot be delivered or received because the customer is unavailable, unreachable, provides incorrect or incomplete details, or declines the order at the delivery point, the sale is considered fulfilled and the amount paid is non-refundable.</p>
+        <p>Perishable food cannot be returned or kept safe for later delivery. Any unreceived item will be responsibly handled, including safe donation where appropriate and permitted, or properly disposed of without returning it to sale. Where a failed delivery is caused by circumstances beyond the customer's control, reasonable assistance will be provided to reschedule or investigate the issue.</p>
+        <button type="button" class="policy-confirm" onclick="acceptDeliveryPolicy()">I have read and accept</button>
+      </article>
+    </dialog>
+
+    <div class="checkout-actions">
+      <button onclick="checkout()" data-i18n="whatsapp">Place order via WhatsApp</button>
+      <button class="secondary" onclick="downloadReceipt()" data-i18n="receipt">Download receipt PDF</button>
+    </div>
+  </section>
+
+  <section id="adminPanel" class="admin-panel" hidden>
+    <div class="admin-heading"><h2 data-i18n="orders">Orders</h2><button onclick="hideAdmin()" data-i18n="close">Close</button></div>
+    <div id="orders"></div>
+  </section>
+</main>
+
+<footer><p>© 2026 Akara & Koko Delivery</p></footer>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "Akara & Koko Delivery",
+  "short_name": "Akara & Koko",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fffaf3",
+  "theme_color": "#8b0000",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
